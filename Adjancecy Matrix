@@ -1,156 +1,78 @@
-#include<iostream>
-
+#include <iostream>
 using namespace std;
-
-class City 
-
+class matrix
 {
-
 public:
-
- int n,i,j,c,t;
-
- int M[50][50]; 
-
- int visited[10];
-
- int count=0;
-
- void read()
-
-{
-
- cout<<"\n Enter the total number of cities: ";
-
- cin>>n;
-
- for(i=0;i<n;i++) 
-
-{
-
- for(j=0;j<n;j++) 
-
-{
-
- M[i][j]=0;
-
- }
-
- }
-
- cout<<"\n Enter the number of flight exit between cities: ";
-
- cin>>c;
-
- for(i=0;i<c;i++) 
-
-{
-
- int x,y;
-
- cout<<"\n Enter the source cities and destination cities: ";
-
- cin>>x>>y;
-
- cout<<"\n Enter the time required between city " << x << " and city " << y << ": ";
-
- cin>>t;
-
- M[x][y]=t;
-
- M[y][x]=t; 
-
- }
-
- }
-
- void display() 
-
-{
-
- cout<<"\n Matrix representing time between cities:\n";
-
- for(i=0;i<n;i++) 
-
-{
-
- for (j=0;j<n;j++) 
-
-{
-
- cout<<M[i][j]<< " ";
-
- }
-
- cout<<endl;
-
- }
-
- }
-
- void DFS(int u)
-
- {
-
- for(int v=0;v<n;v++)
-
- {
-
- if (visited[v]==0 && M[u][v]!=0)
-
- {
-
- count++;
-
- visited[v]=1;
-
- DFS(v);
-
-}
-
-}
-
-}
-
+    int n, i, j, p, t, c, c1, count;
+    int M[30][30];
+    int city[10];
+    int visited[10];
+    void read()
+    {
+        cout << "\n enter the no.of cities:";
+        cin >> n;
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+            {
+                M[i][j] = 0;
+            }
+        }
+        cout << "\n enter how many flights exits :";
+        cin >> p;
+        for (i = 0; i < p; i++)
+        {
+            cout << "\n enter the source city:";
+            cin >> c;
+            cout << "\n enter the destination city:";
+            cin >> c1;
+            cout << "\n enter the time required to travel the path:";
+            cin >> t;
+            M[c][c1] = M[c1][c] = t;
+        }
+    }
+    void display()
+    {
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+            {
+                cout << M[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
+    void DFS(int u)
+    {
+        for (int v = 0; v < n; v++)
+        {
+            if (visited[v] == 0 && M[u][v] != 0)
+            {
+                count++;
+                visited[v] = 1;
+                DFS(v);
+            }
+        }
+    }
 };
-
 int main()
-
-
 {
-
- City ob;
-
- ob.read();
-
- ob.display();
-
- for(int i=0;i<10;i++)
-
- {
-
- ob.visited[i]=0;
-
-}
-
-ob.DFS(0);
-
- if(ob.count==ob.n)
-
-{
-
-cout<<"\n graph is connected";
-
-}
-
-else
-
-{
-
-cout<<"\n graph is not connected";
-
-}
-
- return 0;
-
+    matrix m;
+    m.read();
+    m.display();
+    m.count = 0;
+    for (int i = 0; i < 10; i++)
+    {
+        m.visited[i] = 0;
+    }
+    m.DFS(0);
+    if (m.count == m.n)
+    {
+        cout << "\n connected graph";
+    }
+    else
+    {
+        cout << "\n disconnected graph";
+    }
+    return 0;
 }
