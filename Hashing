@@ -1,0 +1,99 @@
+#include<iostream>
+using namespace std;
+
+struct user{
+string name;
+int telno;
+};
+int main()
+{
+    user dir[10];
+    user dir2[10];
+    int n;
+    cout<<"Enter the no  of user you want to store:";
+    cin>>n;
+    for(int i=0;i<10;i++)
+    {
+         dir[i].name="None";
+         dir[i].telno=-1;
+         dir2[i].name="None";
+         dir2[i].telno=-1;
+    }
+
+    cout<<"Initially the values are:\n\n";
+    cout<<"Name \t \t Telephone\n";
+    for(int i=0;i<10;i++)
+    {
+        cout<<dir[i].name<<"\t\t   "<<dir[i].telno<<"\n";
+    }
+    cout<<"\n\n";
+    cout<<"Name \t \t Telephone\n";
+    for(int i=0;i<10;i++)
+    {
+         cout<<dir2[i].name<<"\t\t   "<<dir2[i].telno<<"\n";
+    }
+    cout<<"\n\n";
+      string nm;
+        int t,h,x=1,sum;
+    for(int i=0;i<n;i++)
+    {
+        sum=0;
+        cout<<"Enter the name of user "<<i+1<<":\n";
+        cin>>nm;
+        cout<<"Enter the telephone no :\n";
+        cin>>t;
+        for(int j=0;nm[j]!='\0';j++)
+        {
+             sum+=nm[j];
+        }                           
+        h=sum%10;
+        cout<<"Position of user is: "<<h<<"\n";
+        if(dir[h].name=="None")
+        {
+            dir[h].name=nm;
+            dir[h].telno=t;
+        }
+        else{
+        while(dir[h].name!="None")
+        {
+            h=(h+1)%10;
+            cout<<"Collision occurred !\n";
+        }
+        cout<<"New position of user is: "<<h<<"\n";
+           dir[h].name=nm;
+           dir[h].telno=t;
+        }
+
+        h=sum%10;
+        cout<<"Position of user is: "<<h<<"\n";
+        if(dir2[h].name=="None")
+        {
+            dir2[h].name=nm;
+            dir2[h].telno=t;
+        }
+        else{
+        while(dir2[h].name!="None")
+        {
+            h=(h+(x*x))%10;
+            x++;
+            cout<<"Collision occurred !\n";
+        }
+        cout<<"New position of user is: "<<h<<"\n";
+           dir2[h].name=nm;
+           dir2[h].telno=t;
+        }
+     }
+        cout<<"Values after insertion are:\n";
+        cout<<"Name \t \t Telephone\n";
+        for(int i=0;i<10;i++)
+        {
+            cout<<dir[i].name<<"\t\t   "<<dir[i].telno<<"\n";
+        }
+        cout<<"\n\n";
+        cout<<"Name \t \t Telephone\n";
+    for(int i=0;i<10;i++)
+    {
+        cout<<dir2[i].name<<"\t\t   "<<dir2[i].telno<<"\n";
+    }
+    return 0;
+}
