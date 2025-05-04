@@ -1,205 +1,103 @@
-#include<iostream>
-
+#include <iostream>
 #define max 20
-
 using namespace std;
-
 class array
-
 {
-
 public:
-
-int i,j,n,leftI,rightI,largeI,smallestI,A[max],B[max],temp;
-
-void read()
-
-{
-
- cout<<"\n Enter the total no.of student:";
-
-cin>>n;
-
-cout<<"\n enter the marks:";
-
-for(i=0;i<n;i++)
-
- {
-
- cin>>A[i];
-
- B[i]=A[i];
-
-}
-
-}
-
-void maximum()
-
-{
-
-for(j=n/2-1;j>=0;j--) 
-
-{
-
-i=j;
-
- while(1)
-
- {
-
- largeI=i;
-
- leftI=2*i+1;
-
- rightI=2*i+2;
-
- if(leftI<n && A[largeI]<A[leftI])
-
- {
-
- largeI=leftI;
-
- }
-
- if(rightI<n && A[largeI]<A[rightI])
-
- {
-
- largeI=rightI;
-
- } 
-
- if(largeI!=i)
-
- {
-
- temp=A[i];
-
- A[i]=A[largeI];
-
- A[largeI]=temp;
-
- i=largeI;
-
- }
-
- else
-
- {
-
- break;
-
-}
-
- }
-
-}
-
-cout<<"\n maximum heap:";
-
-for(j=0;j<n;j++)
-
-{
-
-cout<<A[j]<<" ";
-
-}
-
- cout<<"\n Maximum Marks:"<<A[0]; 
-
- }
-
- void minimum()
-
-{
-
-for(j=n/2-1;j>=0;j--) 
-
- {
-
- i=j;
-
- while(1)
-
- {
-
- smallestI=i;
-
- leftI=2*i+1;
-
- rightI=2*i+2;
-
- if(leftI<n && B[smallestI]>B[leftI])
-
- {
-
- smallestI=leftI;
-
- }
-
- if(rightI<n && B[smallestI]>B[rightI])
-
- {
-
- smallestI=rightI;
-
- } 
-
- if(smallestI!=i)
-
- {
-
- temp=B[i];
-
- B[i]=B[smallestI];
-
- B[smallestI]=temp;
-
- i=smallestI;
-
- }
-
- else
-
- {
-
- break;
-
-}
-
- } 
-
-}
-
-cout<<"\n Minimum heap:";
-
-for(j=0;j<n;j++)
-
-{
-
-cout<<B[j]<<" ";
-
-}
-
- cout<<"\n Minimum Marks:"<<B[0];
-
-}
-
+    int i, j, n, leftI, rightI, largeI, smallestI, A[max], B[max], temp;
+    void read()
+    {
+        cout << "\n Enter the total no.of student:";
+        cin >> n;
+        cout << "\n enter the marks:";
+        for (i = 0; i < n; i++)
+        {
+            cin >>A[i];
+            B[i] =A[i];
+        }
+    }
+    void maximum()
+    {
+        for (j =n/2-1;j>=0;j--)
+        {
+            i = j;
+            while (1)
+            {
+                largeI = i;
+                leftI = 2 * i + 1;
+                rightI = 2 * i + 2;
+                if (leftI < n && A[largeI] < A[leftI])
+                {
+                    largeI = leftI;
+                }
+                if (rightI < n && A[largeI] < A[rightI])
+                {
+                    largeI = rightI;
+                }
+                if (largeI != i)
+                {
+                    temp = A[i];
+                    A[i] = A[largeI];
+                    A[largeI] = temp;
+                    i = largeI;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        cout <<"\n maximum heap:";
+        for (j = 0; j < n; j++)
+        {
+            cout <<A[j]<< " ";
+        }
+        cout <<"\n Maximum Marks:"<< A[0];
+    }
+    void minimum()
+    {
+        for (j =n/2-1;j>=0;j--)
+        {
+            i = j;
+            while (1)
+            {
+                smallestI = i;
+                leftI = 2 * i + 1;
+                rightI = 2 * i + 2;
+                if (leftI<n &&B[smallestI]> B[leftI])
+                {
+                    smallestI=leftI;
+                }
+                if(rightI<n && B[smallestI] > B[rightI])
+                {
+                    smallestI=rightI;
+                }
+                if(smallestI!=i)
+                {
+                    temp=B[i];
+                    B[i]=B[smallestI];
+                    B[smallestI]=temp;
+                    i=smallestI;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        cout<<"\n Minimum heap:";
+        for(j =0;j<n;j++)
+        {
+            cout<<B[j]<<" ";
+        }
+        cout<<"\n Minimum Marks:"<< B[0];
+    }
 };
-
 int main()
-
 {
-
-array a;
-
-a.read();
-
-a.maximum();
-
-a.minimum();
-
-return 0;
-
+    array a;
+    a.read();
+    a.maximum();
+    a.minimum();
+    return 0;
 }
