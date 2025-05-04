@@ -1,0 +1,156 @@
+#include<iostream>
+
+using namespace std;
+
+class City 
+
+{
+
+public:
+
+ int n,i,j,c,t;
+
+ int M[50][50]; 
+
+ int visited[10];
+
+ int count=0;
+
+ void read()
+
+{
+
+ cout<<"\n Enter the total number of cities: ";
+
+ cin>>n;
+
+ for(i=0;i<n;i++) 
+
+{
+
+ for(j=0;j<n;j++) 
+
+{
+
+ M[i][j]=0;
+
+ }
+
+ }
+
+ cout<<"\n Enter the number of flight exit between cities: ";
+
+ cin>>c;
+
+ for(i=0;i<c;i++) 
+
+{
+
+ int x,y;
+
+ cout<<"\n Enter the source cities and destination cities: ";
+
+ cin>>x>>y;
+
+ cout<<"\n Enter the time required between city " << x << " and city " << y << ": ";
+
+ cin>>t;
+
+ M[x][y]=t;
+
+ M[y][x]=t; 
+
+ }
+
+ }
+
+ void display() 
+
+{
+
+ cout<<"\n Matrix representing time between cities:\n";
+
+ for(i=0;i<n;i++) 
+
+{
+
+ for (j=0;j<n;j++) 
+
+{
+
+ cout<<M[i][j]<< " ";
+
+ }
+
+ cout<<endl;
+
+ }
+
+ }
+
+ void DFS(int u)
+
+ {
+
+ for(int v=0;v<n;v++)
+
+ {
+
+ if (visited[v]==0 && M[u][v]!=0)
+
+ {
+
+ count++;
+
+ visited[v]=1;
+
+ DFS(v);
+
+}
+
+}
+
+}
+
+};
+
+int main()
+
+
+{
+
+ City ob;
+
+ ob.read();
+
+ ob.display();
+
+ for(int i=0;i<10;i++)
+
+ {
+
+ ob.visited[i]=0;
+
+}
+
+ob.DFS(0);
+
+ if(ob.count==ob.n)
+
+{
+
+cout<<"\n graph is connected";
+
+}
+
+else
+
+{
+
+cout<<"\n graph is not connected";
+
+}
+
+ return 0;
+
+}
