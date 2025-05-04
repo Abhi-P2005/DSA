@@ -1,0 +1,86 @@
+#include<iostream>
+#include<stack>
+#include<string>
+using namespace std;
+
+struct node
+{   char data;
+	node *left,*right;
+	
+};
+class tree
+{
+	public:
+	node *root,*nnode;
+	stack<node*>s1;
+	//root=s1.pop();
+
+	void creation()
+	{
+	
+    
+		string exp;
+    cout<<"\n Enter the  expretion";
+    int n;
+    cin>>exp;
+    n=exp.length();
+   /* for( int i=0; i<n;i++)
+    	{
+    		cin>>exp[i];
+		}*/
+	
+	  for(int i=n-1;i>=0;i--)	
+	  {
+	  	char ch;
+	  	ch=exp[i];
+	  	nnode=new node();
+	  	nnode->left=nnode->right=NULL;
+	  	nnode->data=ch;
+	  	if( (ch>=97 && ch<=122 ) || (ch>=65 && ch<=91 ) )
+	  	{
+	  	s1.push(nnode);
+		 // cout<<s1.top();	
+		   }
+			
+		else
+		{
+		//	s1.push(nnode);
+			
+	  		nnode->left=s1.top();
+			s1.pop();
+			 nnode->right=s1.top();	
+			 s1.pop();
+			 cout<<nnode->data;
+			 s1.push(nnode);
+		}
+	
+	  }
+	  
+
+	}
+
+    void display(node* temp)
+ {  
+ 
+ 	if( temp!=NULL)
+ 	{  
+ 		display(temp->left);
+ 		display(temp->right);
+ 		cout<<" '"<<temp->data<<"' ";
+ 			
+	 }
+ }
+    };
+int main()
+{	//	stack<tree>s1;
+
+	tree ob;
+	ob.creation();
+	//node *root;
+	  if (!ob.s1.empty()) {
+	ob.root=ob.s1.top();
+//	cout<<root->data;
+	ob.s1.pop();
+	ob.display(ob.root);}
+	return 0;
+}
