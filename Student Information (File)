@@ -1,243 +1,119 @@
-#include<iostream>
-
-#include<fstream>
-
+#include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
-class student
-
+void addStudent()
 {
-
- public:
-
- int roll;
-
- char div;
-
- char name[20],add[20];
-
- void read()
-
- {
-
- cout<<"\n enter the name of student:";
-
- cin>>name;
-
- cout<<"\n enter the roll no:";
-
- cin>>roll;
-
- cout<<"\n enter the div:";
-
- cin>>div;
-
- cout<<"\n enter the address :";
-
- cin>>add;
-
- }
-
- void display()
-
- {
-
- cout<<"\n Name:"<<name;
-
- cout<<"\n Roll no:"<<roll;
-
- cout<<"\n Division:"<<div;
-
- cout<<"\n Address:"<<add;
-
- }
-
-};
-
-int main()
-
-{
-
- student s;
-
-ofstream fout,temp;
-
- ifstream fin;
-
-char choice;
-
-int ch,a,n,i;
-
- int flag;
-
-do
-
-{ cout<<"\n 1.Write data \n 2.append data \n 3.read data \n 4.search data \n 5.deletion 
-
-of data";
-
-cout<<"\n Enter the your choice";
-
-cin>>ch;
-
-switch(ch)
-
-{
-
-case 1: fout.open("student.txt", ios::out); 
-
- cout << "Enter the number of student data you want to write: ";
-
- cin >> n;
-
- for (i = 0; i < n; i++) 
-
-{
-
- s.read();
-
- fout.write((char*)&s, sizeof(s));
-
- 
-
- }
-
- fout.close();
-
- break;
-
-case 2:fout.open("student.txt", ios::app); 
-
- s.read();
-
- fout.write((char*)&s, sizeof(s));
-
- 
-
- fout.close();
-
- break;
-
-case 3: cout << "\n Reading data from file:\n";
-
- fin.open("student.txt");
-
- while (fin.read((char*)&s, sizeof(s)))
-
- {
-
- s.display();
-
- }
-
- fin.close();
-
- break;
-
-case 4: 
-
- cout<<"\n Enter rollno to search";
-
- cin>>a;
-
- flag=0;
-
- fin.open("student.txt");
-
- while (fin)
-
- {
-
- fin.read((char*)&s, sizeof(s));
-
- if(s.roll==a)
-
- {
-
-cout<<"\n student rollno. found";
-
- s.display();
-
- flag=1;
-
- break;
-
- }
-
- }
-
- if(flag==0)
-
- {
-
- cout<<"\n student does not exists";
-
- }
-
- fin.close(); 
-
- break;
-
- case 5: cout<<"\n Enter the rollno to be deleted:";
-
- cin>>n;
-
- flag=0;
-
- fin.open("student.txt",ios::in);
-
- temp.open("temp.txt",ios::out);
-
- while(fin.read((char*)&s,sizeof(s)))
-
- {
-
- if(s.roll==n)
-
- {
-
- cout<<n<<" is deleted successfully ";
-
- flag=1;
-
- continue;
-
+    ofstream file("students.txt",ios::app);
+    string rollNo, name, division, address;
+    cout<<"Enter Roll Number, Name, Division, Address: ";
+    cin>>rollNo>>name>>division>>address;
+    file<<rollNo<< " "<<name<<" "<<division<<" "<<address<<endl;
+    file.close();
+    cout<<"Student added!"<<endl;
 }
 
- temp.write((char*)&s,sizeof(s));
-
-}
-
-fin.close();
-
-temp.close();
-
-remove("student.txt");
-
-rename("temp.txt","student.txt");
-
-if(flag==0)
-
+void searchStudent(string rollNo) 
 {
-
-cout<<"\n Roll number does not exist";
-
+    ifstream file("students.txt");
+    string r,n,d,a;
+    bool found=false;
+    while(file>>r>>n>>d>>a) 
+	{
+        if(r==rollNo) 
+		{
+            cout<<"Roll Number: "<<r<<"\nName: "<<n<<"\nDivision: "<<d<<"\nAddress: "<<a<<endl;
+            found=true;
+            break;
+        }
+    }
+    file.close();
+    if (!found) cout<<"Record not found!"<<endl;
 }
 
-break;
+void deleteStudent(string rollNo) 
+{
+    ifstream file("students.txt");
+    ofstream tempFile("temp.txt");
+    string r,n,d,a;
+    bool found=false;
+    while (file>>r>>n>>d>>a)
+	{
+        if(r==rollNo)
+		{
+            found=true;
+            cout<<"Record deleted successfully!"<<endl;
+        }
+		else 
+		{
+            tempFile<<r<<" "<<n<<" "<<d<<" "<<a<<endl;
+        }
+    }
+    
+    file.close();
+    tempFile.close();
+    remove("students.txt");
+    rename("temp.txt", "students.txt");
 
- default: cout<<"\n Your choice is wrong";
-
+    if(!found) 
+	{
+        cout<<"Record not found!"<<endl;
+    }
 }
 
-cout<<"\nDo you want to continue ";
-
-cin>>choice;
-
+void displayRecords() 
+{
+    ifstream file("students.txt");
+    string record;
+    bool found=false;
+    cout<<"Student Records:\n";
+    while(getline(file, record)) 
+	{
+        cout<<record<<endl;
+        found=true;
+    }
+    if(!found)
+    {
+    	cout<<"No records found in file! \n";
+	}
+    file.close();
 }
 
-while(choice=='y');
-
-return 0;
-
+int main() 
+{
+    int choice;
+    string rollNo;
+    do 
+	{
+        cout<<"1. Add Student\t2. Search Student \t3. Delete Student\t4. Display record \t5. Exit \nEnter your choice: ";
+        cin>>choice;
+        if(choice==1)
+        {
+			addStudent();
+		}
+        else if(choice==2) 
+		{
+            cout<<"Enter Roll Number: ";
+            cin>>rollNo;
+            searchStudent(rollNo);
+        } 
+		else if(choice==3) 
+		{
+   			cout<<"Enter Roll Number to delete: ";
+    		cin>>rollNo;
+    		deleteStudent(rollNo);
+        }
+        else if(choice==4)
+        {
+        	displayRecords();
+		}
+    	else if(choice==5)
+		{ 
+			cout << "Exiting..." <<endl;
+     	} 
+        else 
+			cout << "Invalid choice!" <<endl;
+    } while(choice!=5);
+    return 0;
 }
