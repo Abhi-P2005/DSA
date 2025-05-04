@@ -1,0 +1,160 @@
+#include <iostream>
+using namespace std;
+struct node
+{
+    int data;
+    node *left,*right;
+};
+class BST
+{
+public:
+    node *nnode, *temp, *temp1, *root;
+    BST()
+    {
+        root=NULL;
+    }
+    void create()
+    {
+        char ch;
+        do
+        {
+            nnode= new node;
+            cout << "\n Enter the data:";
+            cin >> nnode->data;
+            nnode->left = NULL;
+            nnode->right = NULL;
+            if (root == NULL)
+            {
+                root = nnode;
+            }
+            else
+            {
+                temp = root;
+                while (1)
+                {
+                    if (nnode->data < temp->data)
+                    {
+                        if (temp->left == NULL)
+                        {
+                            temp->left = nnode;
+                            break;
+                        }
+                        temp = temp->left;
+                    }
+                    else
+                    {
+                        if (temp->right == NULL)
+                        {
+                            temp->right = nnode;
+                            break;
+                        }
+                        temp = temp->right;
+                    }
+                }
+            }
+            cout << "\n do you want to continue:";
+            cin >> ch;
+        } while (ch == 'y');
+    }
+    void display(node *temp)
+    {
+        if (temp != NULL)
+        {
+            display(temp->left);
+            cout << temp->data << endl;
+            display(temp->right);
+        }
+    }
+    void findmini()
+    {
+        temp = root;
+        while (temp->left != NULL)
+        {
+            temp = temp->left;
+        }
+        cout << temp->data;
+    }
+    void search()
+    {
+        char ch;
+        do
+        {
+            int key;
+            cout << "\n enter the data u want to serach";
+            cin >> key;
+            temp = root;
+            int flag = 0;
+            while (temp != NULL)
+            {
+                if (temp->data == key)
+                {
+                    flag = 1;
+                    break;
+                }
+                else
+                {
+                    if (temp->data < key)
+                    {
+                        temp = temp->right;
+                    }
+                    else
+                    {
+                        temp = temp->left;
+                    }
+                }
+            }
+            if (flag == 1)
+            {
+                cout << "\n key found";
+            }
+            else
+            {
+                cout << "\n key not found";
+            }
+            cout << "\n do u want to continue : ";
+            cin >> ch;
+        } while (ch == 'y');
+    }
+    int height(node *temp)
+    {
+
+        if (temp == NULL)
+        {
+            return -1;
+        }
+        else
+        {
+            int hl = height(temp->left);
+            int hr = height(temp->right);
+            int h = max(hl, hr) + 1;
+            return h;
+        }
+    }
+    void mirror(node *temp)
+    {
+        if (temp != NULL)
+        {
+            mirror(temp->left);
+            mirror(temp->right);
+            temp1 = temp->left;
+            temp->left = temp->right;
+            temp->right = temp1;
+        }
+    }
+};
+int main()
+{
+    BST ob;
+    ob.create();
+    cout << "\n Displaying the data:";
+    ob.display(ob.root);
+    cout << "\n minimun data:";
+    ob.findmini();
+    cout << "\n Searching the data:";
+    ob.search();
+    cout << "\n no.of nodes in longest path is:" << ob.height(ob.root) + 1 << endl;
+    ob.mirror(ob.root);
+    cout << "Mirroring:";
+    ob.display(ob.root);
+    return 0;
+}
